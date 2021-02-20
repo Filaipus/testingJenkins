@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 
 class Calculator {
 
@@ -39,7 +41,9 @@ class Calculator {
     etc
      */
     int fibonacciNumberFinder(int n){
-        return 0;
+        if (n <= 1)
+            return n;
+        return fibonacciNumberFinder(n - 1) + fibonacciNumberFinder(n - 2);
     }
 
 
@@ -51,7 +55,7 @@ class Calculator {
     if int a = 16 then this method returns: 10000
      */
     String intToBinaryNumber(int n){
-        return null;
+        return Integer.toBinaryString(n);
     }
 
     /*
@@ -62,9 +66,29 @@ class Calculator {
 
     if you run this function twice with the same String input, it must return 2 unique String IDs
      */
-    String createUniqueID(String n){
 
-        return null;
+
+    final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
+
+    final java.util.Random rand = new java.util.Random();
+
+    // consider using a Map<String,Boolean> to say whether the identifier is being used or not
+    final Set<String> identifiers = new HashSet<String>();
+
+    String createUniqueID(String n){
+        StringBuilder builder = new StringBuilder();
+
+        while(builder.toString().length() == 0) {
+            builder.append(n);
+            int length = rand.nextInt(5)+5;
+            for(int i = 0; i < length; i++) {
+                builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
+            }
+            if(identifiers.contains(builder.toString())) {
+                builder = new StringBuilder();
+            }
+        }
+        return builder.toString();
     }
 
 
